@@ -2,9 +2,9 @@
 window.addEventListener("load", () => {
   let long;
   let lat;
-  let timezone = document.querySelector('.location-timezone');
-  let tempDescription = document.querySelector('.temp-description');
-  let tempDegree = document.querySelector('.temp-degree');
+  const timezone = document.querySelector('.location-timezone');
+  const tempDescription = document.querySelector('.temp-description');
+  const tempDegree = document.querySelector('.temp-degree');
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -41,4 +41,32 @@ window.addEventListener("load", () => {
     skycons.play();
     return skycons.set(iconID, Skycons[currentIcon]); 
   }
+
+  // convert to celcius
+  function convertToC(F) {
+    const degC = (F - 32) * 5/9;
+    tempDegree.textContent = degC.toFixed(2); 
+  }
+   //convert to farenheit
+  function convertToF(C) {
+    const degF = (C * 9/5) + 32;
+    tempDegree.textContent = degF.toFixed(2); 
+  }
+
+  // change temperature to celcius/ farenheit
+  const tempSection = document.querySelector('.degree-section'); 
+  const tempUnit = document.querySelector('.degree-section span');  
+  tempSection.addEventListener('click', () => {
+    
+    let val = parseFloat(tempDegree.textContent).toFixed(2);
+    const unit = '\xB0'+'F';
+    
+    if(tempUnit.textContent === unit){
+      tempUnit.textContent = '\xB0'+'C';  //convert to celcius
+      convertToC(val);
+    } else {
+      tempUnit.textContent = '\xB0'+'F';  //convert to farenheit
+      convertToF(val);
+    }
+  })
 });
