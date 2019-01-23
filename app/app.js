@@ -22,15 +22,23 @@ window.addEventListener("load", () => {
         })
         .then(data => {
             console.log(data);
-            const { temperature, summary } = data.currently;
-            //set DOM elements from the API
+            const { temperature, summary, icon } = data.currently;
+            // Set DOM elements from the API
             tempDegree.textContent = temperature;
             tempDescription.textContent = summary;
             timezone.textContent = data.timezone;
+            // Set icon
+            setIcons(icon, document.querySelector(".icon"));
         })
         .catch(error => console.error(error));
     });
-  } else {
-    console.log("location unknown");
+  }
+
+  // function to set the icon
+  function setIcons(icon, iconID) {
+    const skycons = new Skycons({color: "white"});
+    const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+    skycons.play();
+    return skycons.set(iconID, Skycons[currentIcon]); 
   }
 });
