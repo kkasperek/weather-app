@@ -1,5 +1,5 @@
 # weather-app
-    A vanilla JS weather app that uses your location. 
+    A vanilla JS weather app that uses your location. Click on the temperature to change units.
 #
 
 Tech Used:
